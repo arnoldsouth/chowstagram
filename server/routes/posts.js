@@ -2,7 +2,7 @@ import express from 'express';
 
 // create controllers and import them
 import {
-  getFeedPost,
+  getFeedPosts,
   getUserPosts,
   likePost,
 } from '../controllers/posts.js';
@@ -12,7 +12,7 @@ const router = express.Router();
 
 /* READ */
 
-router.get('/', verifyToken, getFeedPost);
+router.get('/', verifyToken, getFeedPosts);
 router.get('/:userId/posts', verifyToken, getUserPosts);
 
 /* UPDATE */

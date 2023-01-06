@@ -81,7 +81,7 @@ const MyPostWidget = ({ picturePath }) => {
       <FlexBetween gap="1.5rem">
         <UserImage image={picturePath} />
         <InputBase
-          placeholder={`What's on your mind?`}
+          placeholder="Post description"
           // this input should be updating the setPost state created
           onChange={(e) => setPost(e.target.value)}
           // value should controlled input
@@ -103,8 +103,7 @@ const MyPostWidget = ({ picturePath }) => {
           p="1rem"
         >
           <Dropzone
-            acceptedFiles=".jpg,.jpeg,.png" // only one file can be
-            uploaded
+            acceptedFiles=".jpg,.jpeg,.png" // only one file can be uploaded
             multiple={false}
             // need to set dropzone manually for setFieldValue
             onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}

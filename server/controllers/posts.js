@@ -2,7 +2,6 @@ import Post from '../models/Post.js';
 import User from '../models/User.js';
 
 /* CREATE */
-
 export const createPost = async (req, res) => {
   try {
     // parameters that frontend will send us
@@ -14,10 +13,10 @@ export const createPost = async (req, res) => {
       userId,
       firstName: user.firstName,
       lastName: user.lastName,
-      userPicturePath: user.picturePath, //comes from the user as well because they have a profile picture
-      picturePath, //the post picture path
       location: user.location,
       description,
+      userPicturePath: user.picturePath,
+      picturePath,
       likes: {},
       comments: [],
     });
@@ -27,7 +26,6 @@ export const createPost = async (req, res) => {
 
     // grab all the posts (including this new post added) by creating variable `post` for it which will then get passed to the frontend
     const post = await Post.find();
-
     res.status(201).json(post);
   } catch (err) {
     res.status(409).json({ message: err.message });
@@ -35,11 +33,9 @@ export const createPost = async (req, res) => {
 };
 
 /* READ */
-
-export const getFeedPost = async (req, res) => {
+export const getFeedPosts = async (req, res) => {
   try {
     const post = await Post.find();
-
     res.status(200).json(post);
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -49,9 +45,9 @@ export const getFeedPost = async (req, res) => {
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
+
     // pass userId in the find so we grab only posts by that particular userId
     const post = await Post.find({ userId });
-
     res.status(200).json(post);
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -59,14 +55,13 @@ export const getUserPosts = async (req, res) => {
 };
 
 /* UPDATE */
-
 export const likePost = async (req, res) => {
   try {
     // grab id from req.params because it'll come from the queryString
     const { id } = req.params;
+
     // grab userId from req.body because that's how/where the frontend will be sending from
     const { userId } = req.body;
-
     const post = await Post.findById(id);
 
     // check in a post's `likes` if a userId exists. if the userId exists, it means that the post has been liked by that particular user
@@ -80,11 +75,9 @@ export const likePost = async (req, res) => {
     }
 
     // create variable for the updated post, finding a post by passing in the `id` as a parameter, and then updating the likes to our updated post that was just modified
-    const updatedPost = await Post.findById(
+    const updatedPost = await Post.findByIdAndUpdate(
       id,
-      {
-        likes: post.likes,
-      },
+      { likes: post.likes },
       { new: true }
     );
 

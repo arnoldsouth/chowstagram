@@ -22,8 +22,10 @@ const App = () => {
   // whenever we want to grab information from the store, we use useSelector((state)=>state._) to grab the state from the correct reducer
   // grab `mode` from our state/store using useSelector()
   const mode = useSelector((state) => state.mode);
+
   // do once in each app for regarding setting up theme: pass in `mode` we grabbed from the store to themeSettings as a parameter
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+
   // we grab the state.token. if the token exists, then we are authorized, and we add this to our routes
   const isAuth = Boolean(useSelector((state) => state.token));
 
